@@ -34,3 +34,28 @@ abstract class DatabaseBMI : RoomDatabase() {
     // Menghubungkan Database dengan perintah SQL di DAO
     abstract fun bmiDao(): BmiDao
     abstract fun userDao(): UserDao
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 2. SINGLETON PATTERN (Mencegah Database Terbuka Ganda)
+    ///////////////////////////////////////////////////////////////////////////
+    companion object {
+        @Volatile
+        private var INSTANCE: DatabaseBMI? = null
+
+        fun getDatabase(context: Context): DatabaseBMI {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    DatabaseBMI::class.java,
+                    "bmi_database"
+                )
+                    // Menghapus data lama jika versi database naik (migrasi destruktif)
+                    .fallbackToDestructiveMigration()
+                    // Memanggil fungsi otomatis saat database pertama kali dibuat
+                    .addCallback(DatabaseCallback())
+                    .build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }

@@ -27,3 +27,20 @@ interface BmiDao {
     @Delete
     suspend fun deleteBmi(bmi: BmiEntity)
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 2. BAGIAN MASTER KATEGORI (Data Acuan BMI)
+    ///////////////////////////////////////////////////////////////////////////
+
+    // Mencari kategori (Kurus/Normal/Gemuk) berdasarkan skor BMI
+    @Query("""
+        SELECT * FROM kategori_bmi
+        WHERE :nilaiBmi >= batasMin
+        ORDER BY batasMin DESC
+        LIMIT 1
+    """)
+    suspend fun getKategoriByNilai(nilaiBmi: Float): KategoriBmiEntity?
+
+    // Untuk mengisi data kategori pertama kali (Seed data)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertKategori(kategori: List<KategoriBmiEntity>)

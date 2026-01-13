@@ -163,3 +163,89 @@ fun HalamanEntry(
                                 focusedContainerColor = Color(0xFFF0FAF9)
                             )
                         )
+                        // PESAN ERROR (Muncul secara halus jika ada)
+                        AnimatedVisibility(visible = errorPesan != null) {
+                            Row(
+                                modifier = Modifier.padding(top = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(Icons.Default.Warning, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(16.dp))
+                                Spacer(Modifier.width(8.dp))
+                                Text(
+                                    text = errorPesan ?: "",
+                                    color = MaterialTheme.colorScheme.error,
+                                    style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(40.dp))
+
+                // TOMBOL HITUNG
+                Button(
+                    onClick = {
+                        // Jalankan validasi di ViewModel
+                        if (viewModel.hitungBmi(userId)) {
+                            // Jika valid (logis), baru pindah halaman
+                            onHitung(tinggiValid!!, beratValid!!)
+                        }
+                    },
+                    // Tombol aktif hanya jika format angka benar (tidak kosong)
+                    enabled = tinggiValid != null && beratValid != null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(64.dp)
+                        .shadow(12.dp, RoundedCornerShape(24.dp)),
+                    shape = RoundedCornerShape(24.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF6200EE),
+                        disabledContainerColor = Color.LightGray
+                    )
+                ) {
+                    Text(
+                        text = stringResource(R.string.tombol_hitung_bmi).uppercase(),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.ExtraBold,
+                            letterSpacing = 1.sp
+                        )
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Surface(
+                    color = Color(0xFFE3F2FD),
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.tips_presisi),
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Medium,
+                                color = Color(0xFF1565C0)
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun InputLabel(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleSmall.copy(
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFF333333)
+        ),
+        modifier = Modifier.padding(bottom = 10.dp, start = 4.dp)
+    )
+}

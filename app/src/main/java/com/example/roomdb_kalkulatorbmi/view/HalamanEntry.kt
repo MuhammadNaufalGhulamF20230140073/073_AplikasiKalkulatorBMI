@@ -44,3 +44,122 @@ fun HalamanEntry(
     val mainGradient = Brush.verticalGradient(
         colors = listOf(Color(0xFF6200EE), Color(0xFF3700B3))
     )
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.judul_analisis),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.ExtraBold,
+                            letterSpacing = 2.sp,
+                            color = Color.White
+                        )
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Surface(
+                            shape = RoundedCornerShape(12.dp),
+                            color = Color.White.copy(alpha = 0.2f),
+                            modifier = Modifier.size(40.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(R.string.kembali),
+                                tint = Color.White,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                    }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color(0xFF6200EE)
+                )
+            )
+        }
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFF8F9FF))
+                .padding(padding)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+                    .background(mainGradient)
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = stringResource(R.string.instruksi_lengkapi_data),
+                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.ExtraBold),
+                    color = Color.White
+                )
+                Text(
+                    text = stringResource(R.string.sub_instruksi_data),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.White.copy(alpha = 0.8f)
+                )
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .shadow(elevation = 20.dp, shape = RoundedCornerShape(32.dp), spotColor = Color(0xFF6200EE)),
+                    shape = RoundedCornerShape(32.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
+                ) {
+                    Column(modifier = Modifier.padding(28.dp)) {
+
+                        // INPUT TINGGI
+                        InputLabel(stringResource(R.string.label_tinggi))
+                        OutlinedTextField(
+                            value = tinggi,
+                            onValueChange = { viewModel.updateTinggi(it) },
+                            placeholder = { Text(stringResource(R.string.contoh_tinggi)) },
+                            suffix = { Text(stringResource(R.string.satuan_cm), fontWeight = FontWeight.ExtraBold, color = Color(0xFF6200EE)) },
+                            leadingIcon = { Icon(Icons.Default.Straighten, null, tint = Color(0xFF6200EE)) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(20.dp),
+                            singleLine = true,
+                            isError = errorPesan?.contains("Tinggi") == true,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFF6200EE),
+                                unfocusedBorderColor = Color(0xFFE0E0E0),
+                                focusedContainerColor = Color(0xFFF5F2FF)
+                            )
+                        )
+
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        // INPUT BERAT
+                        InputLabel(stringResource(R.string.label_berat))
+                        OutlinedTextField(
+                            value = berat,
+                            onValueChange = { viewModel.updateBerat(it) },
+                            placeholder = { Text(stringResource(R.string.contoh_berat)) },
+                            suffix = { Text(stringResource(R.string.satuan_kg), fontWeight = FontWeight.ExtraBold, color = Color(0xFF03DAC5)) },
+                            leadingIcon = { Icon(Icons.Default.MonitorWeight, null, tint = Color(0xFF03DAC5)) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(20.dp),
+                            singleLine = true,
+                            isError = errorPesan?.contains("Berat") == true,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFF03DAC5),
+                                unfocusedBorderColor = Color(0xFFE0E0E0),
+                                focusedContainerColor = Color(0xFFF0FAF9)
+                            )
+                        )

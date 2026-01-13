@@ -44,3 +44,20 @@ interface BmiDao {
     // Untuk mengisi data kategori pertama kali (Seed data)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertKategori(kategori: List<KategoriBmiEntity>)
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 3. BAGIAN OUTFIT (Rekomendasi Pakaian)
+    ///////////////////////////////////////////////////////////////////////////
+
+    // Mengambil daftar baju berdasarkan kategori BMI (misal: kategoriId 2 = Normal)
+    @Query("""
+        SELECT * FROM outfit
+        WHERE kategoriId = :kategoriId
+    """)
+    suspend fun getOutfitByKategori(kategoriId: Int): List<OutfitEntity>
+
+    // Untuk memasukkan data daftar baju ke database
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOutfit(outfit: List<OutfitEntity>)
+}

@@ -59,3 +59,21 @@ abstract class DatabaseBMI : RoomDatabase() {
             }
         }
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 3. CALLBACK (Otomatisasi saat Database Pertama Kali Dibuat)
+    ///////////////////////////////////////////////////////////////////////////
+    private class DatabaseCallback : Callback() {
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
+            INSTANCE?.let { database ->
+                // Menggunakan Coroutine agar pengisian data awal tidak membuat aplikasi lag
+                CoroutineScope(Dispatchers.IO).launch {
+                    prepopulateDatabase(database.bmiDao())
+                }
+            }
+        }
+    }
+}
+

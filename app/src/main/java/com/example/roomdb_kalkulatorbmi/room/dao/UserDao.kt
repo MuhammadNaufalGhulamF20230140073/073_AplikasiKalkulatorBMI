@@ -21,3 +21,22 @@ interface UserDao {
     @Query("SELECT * FROM user ORDER BY tanggalDiubah DESC")
     fun getAllUser(): Flow<List<UserEntity>>
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 2. BAGIAN MANIPULASI DATA (Tambah, Ubah, Hapus)
+    ///////////////////////////////////////////////////////////////////////////
+
+    // Menambah user baru saat klik tombol "Daftar" di Halaman Home
+    // OnConflictStrategy.REPLACE artinya jika ID sama, data lama akan ditimpa
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUser(user: UserEntity)
+
+    // 🔥 PENTING: Untuk memperbarui data user yang sudah ada
+    // Digunakan untuk mengubah 'tanggalDiubah' setiap kali user selesai hitung BMI
+    @Update
+    suspend fun updateUser(user: UserEntity)
+
+    // Menghapus profil user secara permanen
+    @Delete
+    suspend fun deleteUser(user: UserEntity)
+}

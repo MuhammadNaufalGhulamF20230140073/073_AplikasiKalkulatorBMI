@@ -1,3 +1,89 @@
 <resources>
-    <string name="app_name">roomdb_kalkulatorbmi</string>
+    <string name="app_name">Kalkulator BMI</string>
+
+    <string name="judul_utama">LANGKAH SEHAT</string>
+    <string name="sub_judul_utama">Pantau berat idealmu setiap hari</string>
+
+    <string name="salam_selamat_datang">Selamat Datang!</string>
+    <string name="instruksi_awal">Silakan buat profil atau pilih yang sudah ada.</string>
+
+    <string name="kartu_input_judul">Buat Profil Baru</string>
+    <string name="petunjuk_nama">Masukkan Nama Anda...</string>
+    <string name="tombol_daftar">Daftar Sekarang</string>
+
+    <string name="judul_daftar_profil">Profil Tersimpan</string>
+    <string name="pesan_kosong">Belum ada profil. Silakan buat di atas!</string>
+    <string name="pesan_siap_cek">Siap cek kesehatan hari ini?</string>
+
+    <string name="deskripsi_animasi">Animasi Dekorasi</string>
+    <string name="deskripsi_hapus">Hapus Profil</string>
+    <string name="deskripsi_mulai">Mulai Hitung</string>
+
+    <string name="tombol_hitung_bmi">Hitung BMI Sekarang</string>
+    <string name="tombol_kembali">Kembali</string>
+
+    <string name="judul_analisis">ANALISIS BMI</string>
+    <string name="kembali">Kembali</string>
+    <string name="instruksi_lengkapi_data">Lengkapi Data Tubuh</string>
+    <string name="sub_instruksi_data">Masukkan parameter yang akurat untuk hasil terbaik</string>
+
+    <string name="label_tinggi">Tinggi Badan</string>
+    <string name="label_berat">Berat Badan</string>
+    <string name="contoh_tinggi">Contoh: 170</string>
+    <string name="contoh_berat">Contoh: 65</string>
+    <string name="satuan_cm">cm</string>
+    <string name="satuan_kg">kg</string>
+
+    <string name="tips_presisi">💡 Ukur tinggi badan tanpa alas kaki untuk hasil presisi.</string>
+
+
+    ///////HALAMAN HASIL
+    <string name="judul_hasil">HASIL ANALISIS</string>
+    <string name="label_bmi_anda">BMI ANDA</string>
+    <string name="btn_rekomendasi_outfit">LIHAT REKOMENDASI OUTFIT</string>
+    <string name="panduan_bmi_who">Standar BMI WHO</string>
+    <string name="tombol_tutup">Tutup</string>
+    <string name="link_lihat_panduan">Lihat Panduan Standar BMI</string>
+    <string name="cd_panduan_who">Gambar Panduan WHO</string>
+
+
+////// UTAMA
+    <string name="judul_dashboard">DASHBOARD KESEHATAN</string>
+    <string name="salam_pengguna">Halo, Apa Kabar?</string>
+    <string name="sub_salam">Waktunya melangkah lebih sehat hari ini!</string>
+    <string name="pertanyaan_tindakan">Pilih Aktivitasmu:</string>
+
+    <string name="menu_input_bmi">INPUT BMI</string>
+    <string name="sub_menu_input_bmi">Hitung indeks massa tubuh sekarang</string>
+
+    <string name="menu_riwayat">RIWAYAT</string>
+    <string name="sub_menu_riwayat">Lihat perkembangan data Anda</string>
+
+    <string name="cd_keluar">Keluar Profil</string>
+
+
+    /// H Outfit
+    <string name="judul_outfit">Inspirasi Pakaian</string>
+    <string name="label_kurasi">Khusus Untukmu</string>
+    <string name="sub_judul_outfit">Gaya yang membuatmu lebih percaya diri.</string>
+    <string name="pesan_loading_outfit">Mencari inspirasi terbaik...</string>
+    <string name="label_tips_gaya">TIPS GAYA</string>
+    <string name="tombol_selesai">Selesai, Saya Siap!</string>
+
+
+
+    ///H RIWAYAT
+    <string name="judul_riwayat">Riwayat BMI Anda</string>
+    <string name="pesan_riwayat_kosong">Belum ada catatan riwayat kesehatan.</string>
+    <string name="label_tanggal">Tanggal:</string>
+    <string name="label_bmi">Skor BMI:</string>
+    <string name="label_kategori_riwayat">Kategori:</string>
+    <string name="label_berat_riwayat">Berat:</string>
+    <string name="label_tinggi_riwayat">Tinggi:</string>
+
+    <string name="judul_konfirmasi_hapus">Konfirmasi Hapus</string>
+    <string name="pesan_konfirmasi_hapus">Apakah Anda yakin ingin menghapus data riwayat pada tanggal %s?</string>
+    <string name="tombol_hapus">Hapus</string>
+    <string name="tombol_batal">Batal</string>
+
 </resources>

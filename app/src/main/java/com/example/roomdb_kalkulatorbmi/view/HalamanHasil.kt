@@ -66,3 +66,37 @@ fun HalamanHasil(
         4 -> Color(0xFFC62828) // Red - Obese
         else -> MaterialTheme.colorScheme.primary
     }
+
+    if (showDialog) {
+        Dialog(
+            onDismissRequest = { showDialog = false },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            Card(
+                modifier = Modifier.fillMaxWidth(0.9f).padding(16.dp),
+                shape = RoundedCornerShape(28.dp),
+            ) {
+                Column(modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = stringResource(R.string.panduan_bmi_who),
+                        style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.ExtraBold)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), thickness = 2.dp)
+                    Image(
+                        painter = painterResource(id = R.drawable.who),
+                        contentDescription = stringResource(R.string.cd_panduan_who),
+                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)),
+                        contentScale = ContentScale.FillWidth
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(
+                        onClick = { showDialog = false },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text(stringResource(R.string.tombol_tutup))
+                    }
+                }
+            }
+        }
+    }

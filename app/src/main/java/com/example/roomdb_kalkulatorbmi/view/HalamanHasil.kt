@@ -100,3 +100,113 @@ fun HalamanHasil(
             }
         }
     }
+
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.judul_hasil),
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.ExtraBold, letterSpacing = 2.sp)
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                    }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = colorStatus,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+                )
+            )
+        }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFF4F4F9))
+                .padding(padding),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .background(Brush.verticalGradient(listOf(colorStatus, Color.Transparent)))
+            )
+
+            Card(
+                modifier = Modifier
+                    .offset(y = (-60).dp)
+                    .size(280.dp)
+                    .shadow(30.dp, CircleShape, spotColor = colorStatus),
+                shape = CircleShape,
+                colors = CardDefaults.cardColors(containerColor = Color.White)
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.label_bmi_anda),
+                        style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold, color = Color.Gray)
+                    )
+                    Text(
+                        text = String.format("%.1f", bmi),
+                        style = MaterialTheme.typography.displayLarge.copy(
+                            fontSize = 80.sp,
+                            fontWeight = FontWeight.Black,
+                            color = colorStatus
+                        )
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Stars,
+                        contentDescription = null,
+                        tint = colorStatus.copy(alpha = 0.3f),
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+
+            Surface(
+                modifier = Modifier.offset(y = (-30).dp).padding(horizontal = 32.dp),
+                color = colorStatus,
+                shape = RoundedCornerShape(16.dp),
+                shadowElevation = 8.dp
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 32.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(Icons.Default.CheckCircle, null, tint = Color.White)
+                    Spacer(Modifier.width(12.dp))
+                    Text(
+                        text = if (kategori.isEmpty()) "MENGHITUNG..." else kategori.uppercase(),
+                        color = Color.White,
+                        style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Black)
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .clickable { showDialog = true }
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(Icons.Default.Info, null, tint = colorStatus, modifier = Modifier.size(18.dp))
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = stringResource(R.string.link_lihat_panduan),
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        textDecoration = TextDecoration.Underline,
+                        color = colorStatus,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))

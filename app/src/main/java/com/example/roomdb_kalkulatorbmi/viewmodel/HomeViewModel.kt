@@ -58,3 +58,15 @@ fun tambahUser(namaBaru: String) {
         )
     }
 }
+
+
+///////////////////////////////////////////////////////////////////////////
+// 4. FUNGSI HAPUS USER (Hapus dari Database)
+///////////////////////////////////////////////////////////////////////////
+fun hapusUser(user: UserEntity) {
+    viewModelScope.launch {
+        // Memanggil fungsi 'deleteUser' di UserDao melalui RepositoryUser
+        repository.deleteUser(user)
+    }
+}
+}

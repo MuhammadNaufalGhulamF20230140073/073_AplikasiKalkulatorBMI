@@ -50,3 +50,19 @@ fun HalamanHasil(
     // Hitung BMI lokal untuk parameter fungsi
     val tinggiMeter = tinggi / 100f
     val bmiDihitung = berat / (tinggiMeter * tinggiMeter)
+
+
+    // 🔥 PERBAIKAN: LaunchedEffect hanya update tampilan (Display)
+    LaunchedEffect(userId, tinggi, berat) {
+        if (userId > 0 && tinggi > 0f && berat > 0f) {
+            viewModel.updateDisplayHanya(bmiDihitung)
+        }
+    }
+
+    val colorStatus = when (kategoriId) {
+        1 -> Color(0xFF0077C2) // Blue - Underweight
+        2 -> Color(0xFF2E7D32) // Green - Normal
+        3 -> Color(0xFFE65100) // Orange - Overweight
+        4 -> Color(0xFFC62828) // Red - Obese
+        else -> MaterialTheme.colorScheme.primary
+    }

@@ -26,3 +26,17 @@ class HasilViewModel(
     // Digunakan khusus untuk urusan Tabel User (Update status tanggal aktif).
     private val repositoryUser: RepositoryUser
 ) : ViewModel() {
+
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 2. UI STATE (Data yang ditampilkan ke layar Hasil)
+    ///////////////////////////////////////////////////////////////////////////
+    private val _nilaiBmi = MutableStateFlow(0f)
+    val nilaiBmi: StateFlow<Float> = _nilaiBmi
+
+    private val _kategori = MutableStateFlow("")
+    val kategori: StateFlow<String> = _kategori
+
+    private val _kategoriId = MutableStateFlow(0)
+    val kategoriId: StateFlow<Int> = _kategoriId}

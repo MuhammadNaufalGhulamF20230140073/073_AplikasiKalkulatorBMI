@@ -76,3 +76,29 @@ fun isDataLogis(): Boolean {
     }
 }
 
+
+
+///////////////////////////////////////////////////////////////////////////
+// 5. FUNGSI UTAMA (Pintu Gerbang Sebelum Pindah ke Halaman Hasil)
+///////////////////////////////////////////////////////////////////////////
+
+fun hitungBmi(userId: Int): Boolean {
+    val tinggiCm = _tinggi.value.toFloatOrNull()
+    val beratKg = _berat.value.toFloatOrNull()
+
+    /////// CEK KEKOSONGAN DATA
+    if (tinggiCm == null || beratKg == null) {
+        _errorPesan.value = "Harap isi semua kolom"
+        return false
+    }
+
+    /////// CEK KEWAJARAN ANGKA (Memanggil fungsi isDataLogis di atas)
+    if (!isDataLogis()) {
+        return false
+    }
+
+    // Jika semua oke, UI akan berpindah halaman ke 'HasilScreen'
+    // Data hasil hitungan baru akan disimpan ke DAO lewat 'HasilViewModel'
+    return true
+}
+}

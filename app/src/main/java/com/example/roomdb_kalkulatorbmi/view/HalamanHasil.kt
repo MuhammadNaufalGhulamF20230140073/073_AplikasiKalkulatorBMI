@@ -210,3 +210,33 @@ fun HalamanHasil(
             }
 
             Spacer(modifier = Modifier.weight(1f))
+
+
+            // 🔥 PERBAIKAN: SIMPAN KE DB HANYA DI TOMBOL INI
+            Button(
+                onClick = {
+                    if (kategoriId != 0) {
+                        // Jalankan fungsi simpan permanen
+                        viewModel.simpanKeRiwayatPermanen(userId, tinggi, berat, bmiDihitung)
+                        // Navigasi
+                        onLihatOutfit(kategoriId)
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp)
+                    .height(70.dp)
+                    .shadow(15.dp, RoundedCornerShape(20.dp), spotColor = colorStatus),
+                shape = RoundedCornerShape(20.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = colorStatus),
+                enabled = kategoriId != 0
+            ) {
+                Text(
+                    text = stringResource(R.string.btn_rekomendasi_outfit),
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.ExtraBold, letterSpacing = 1.sp)
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}

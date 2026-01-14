@@ -29,76 +29,75 @@ class EntryViewModel(
     // _errorPesan: Digunakan untuk memberi tahu UI jika input tidak valid
     private val _errorPesan = MutableStateFlow<String?>(null)
     val errorPesan: StateFlow<String?> = _errorPesan.asStateFlow()
-}
 
 
-///////////////////////////////////////////////////////////////////////////
-// 3. FUNGSI UPDATE (Sinkronisasi UI ke State)
-///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    // 3. FUNGSI UPDATE (Sinkronisasi UI ke State)
+    ///////////////////////////////////////////////////////////////////////////
 
-fun updateTinggi(value: String) {
-    _tinggi.value = value
-    _errorPesan.value = null // Reset error saat user mulai memperbaiki input
-}
-
-fun updateBerat(value: String) {
-    _berat.value = value
-    _errorPesan.value = null // Reset error saat user mulai memperbaiki input
-}
-
-///////////////////////////////////////////////////////////////////////////
-// 4. LOGIKA VALIDASI (Pengecekan Keamanan Data)
-///////////////////////////////////////////////////////////////////////////
-
-/**
- * Fungsi Validasi: Mengecek apakah input masuk akal untuk manusia
- * Menggunakan logika mandiri di dalam ViewModel (Tanpa memanggil DAO/Repo)
- */
-fun isDataLogis(): Boolean {
-    val t = _tinggi.value.toFloatOrNull() ?: 0f
-    val b = _berat.value.toFloatOrNull() ?: 0f
-
-    return when {
-        // Logika validasi: Tinggi badan normal (50cm - 250cm)
-        t < 50f || t > 250f -> {
-            _errorPesan.value = "Tinggi badan harus antara 50 - 250 cm"
-            false
-        }
-        // Logika validasi: Berat badan normal (2kg - 500kg)
-        b < 2f || b > 500f -> {
-            _errorPesan.value = "Berat badan harus antara 2 - 500 kg"
-            false
-        }
-        else -> {
-            _errorPesan.value = null
-            true
-        }
-    }
-}
-
-
-
-///////////////////////////////////////////////////////////////////////////
-// 5. FUNGSI UTAMA (Pintu Gerbang Sebelum Pindah ke Halaman Hasil)
-///////////////////////////////////////////////////////////////////////////
-
-fun hitungBmi(userId: Int): Boolean {
-    val tinggiCm = _tinggi.value.toFloatOrNull()
-    val beratKg = _berat.value.toFloatOrNull()
-
-    /////// CEK KEKOSONGAN DATA
-    if (tinggiCm == null || beratKg == null) {
-        _errorPesan.value = "Harap isi semua kolom"
-        return false
+    fun updateTinggi(value: String) {
+        _tinggi.value = value
+        _errorPesan.value = null // Reset error saat user mulai memperbaiki input
     }
 
-    /////// CEK KEWAJARAN ANGKA (Memanggil fungsi isDataLogis di atas)
-    if (!isDataLogis()) {
-        return false
+    fun updateBerat(value: String) {
+        _berat.value = value
+        _errorPesan.value = null // Reset error saat user mulai memperbaiki input
     }
 
-    // Jika semua oke, UI akan berpindah halaman ke 'HasilScreen'
-    // Data hasil hitungan baru akan disimpan ke DAO lewat 'HasilViewModel'
-    return true
-}
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 4. LOGIKA VALIDASI (Pengecekan Keamanan Data)
+    ///////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Fungsi Validasi: Mengecek apakah input masuk akal untuk manusia
+     * Menggunakan logika mandiri di dalam ViewModel (Tanpa memanggil DAO/Repo)
+     */
+    fun isDataLogis(): Boolean {
+        val t = _tinggi.value.toFloatOrNull() ?: 0f
+        val b = _berat.value.toFloatOrNull() ?: 0f
+
+        return when {
+            // Logika validasi: Tinggi badan normal (50cm - 250cm)
+            t < 50f || t > 250f -> {
+                _errorPesan.value = "Tinggi badan harus antara 50 - 250 cm"
+                false
+            }
+            // Logika validasi: Berat badan normal (2kg - 500kg)
+            b < 2f || b > 500f -> {
+                _errorPesan.value = "Berat badan harus antara 2 - 500 kg"
+                false
+            }
+            else -> {
+                _errorPesan.value = null
+                true
+            }
+        }
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 5. FUNGSI UTAMA (Pintu Gerbang Sebelum Pindah ke Halaman Hasil)
+    ///////////////////////////////////////////////////////////////////////////
+
+    fun hitungBmi(userId: Int): Boolean {
+        val tinggiCm = _tinggi.value.toFloatOrNull()
+        val beratKg = _berat.value.toFloatOrNull()
+
+        /////// CEK KEKOSONGAN DATA
+        if (tinggiCm == null || beratKg == null) {
+            _errorPesan.value = "Harap isi semua kolom"
+            return false
+        }
+
+        /////// CEK KEWAJARAN ANGKA (Memanggil fungsi isDataLogis di atas)
+        if (!isDataLogis()) {
+            return false
+        }
+
+        // Jika semua oke, UI akan berpindah halaman ke 'HasilScreen'
+        // Data hasil hitungan baru akan disimpan ke DAO lewat 'HasilViewModel'
+        return true
+    }
 }

@@ -99,3 +99,74 @@ fun HalamanHome(
                 contentPadding = PaddingValues(24.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+            }
+
+
+
+            ///////////////////////////////////////////////////////////////////////////
+            // 1. HEADER SECTION (Salam Selamat Datang)
+            ///////////////////////////////////////////////////////////////////////////
+            item {
+                Column(modifier = Modifier.padding(bottom = 8.dp)) {
+                    Text(
+                        text = stringResource(R.string.salam_selamat_datang),
+                        style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                    Text(
+                        text = stringResource(R.string.instruksi_awal),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray
+                    )
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////////////////
+            // 2. INPUT SECTION (Tambah User Baru)
+            ///////////////////////////////////////////////////////////////////////////
+            item {
+                ElevatedCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(28.dp),
+                    colors = CardDefaults.elevatedCardColors(containerColor = Color.White),
+                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
+                ) {
+                    Column(modifier = Modifier.padding(24.dp)) {
+                        OutlinedTextField(
+                            value = inputNama,
+                            onValueChange = { inputNama = it },
+                            placeholder = { Text(stringResource(R.string.petunjuk_nama)) },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(16.dp),
+                            leadingIcon = { Icon(Icons.Default.Person, null, tint = Color(0xFF6200EE)) },
+                            singleLine = true
+                        )
+
+                        Spacer(Modifier.height(16.dp))
+
+                        /////// AKSI: TOMBOL DAFTAR
+                        // Mengirim data nama ke HomeViewModel untuk disimpan ke Room Database
+                        Button(
+                            onClick = {
+                                if (inputNama.isNotBlank()) {
+                                    viewModel.tambahUser(inputNama)
+                                    inputNama = "" // Reset kolom setelah klik
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth().height(56.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+                        ) {
+                            Icon(Icons.Default.Add, null)
+                            Spacer(Modifier.width(8.dp))
+                            Text(stringResource(R.string.tombol_daftar), fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
+            }
+
+            item {
+                Text(
+                    text = stringResource(R.string.judul_daftar_profil),
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
+                )
+            }

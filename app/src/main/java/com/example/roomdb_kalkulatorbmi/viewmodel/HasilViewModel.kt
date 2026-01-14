@@ -60,3 +60,46 @@ fun updateDisplayHanya(bmi: Float) {
         }
     }
 }
+
+
+///////////////////////////////////////////////////////////////////////////
+// 4. FUNGSI EKSEKUSI DATABASE (SAVE & UPDATE)
+///////////////////////////////////////////////////////////////////////////
+fun simpanKeRiwayatPermanen(userId: Int, tinggi: Float, berat: Float, bmi: Float) {
+    viewModelScope.launch {
+        try {
+            val formatTanggal = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(Date())
+
+            /////// A. PROSES SIMPAN KE TABEL RIWAYAT (BmiDao)
+            // Memanggil 'insertBmi' di BmiDao melalui repositoryBmi
+            repositoryBmi.insertBmi(
+                BmiEntity(
+                    userId = userId,
+                    tinggi = tinggi,
+                    berat = berat,
+                    nilaiBmi = bmi,
+                    kategori = _kategori.value,
+                    tanggal = formatTanggal
+                )
+            )
+
+            /////// B. PROSES UPDATE STATUS AKTIF KE TABEL USER (UserDao)
+            // 1. Ambil data user dari UserDao menggunakan 'firstOrNull()' agar tidak perlu loop terus-menerus
+            val user = repositoryUser.getUserById(userId).firstOrNull()
+
+            if (user != null) {
+                // 2. Lakukan 'copy' data lama dan ubah hanya bagian 'tanggalDiubah'
+                val userTerupdate = user.copy(tanggalDiubah = formatTanggal)
+
+                // 3. Panggil 'updateUser' di UserDao melalui repositoryUser
+                repositoryUser.updateUser(userTerupdate)
+                Log.d("DEBUG_BMI", "✅ USER AKTIF: ${user.nama} diperbarui")
+            }
+
+            Log.d("DEBUG_BMI", "✅ BERHASIL SIMPAN")
+        } catch (e: Exception) {
+            Log.e("DEBUG_BMI", "Gagal simpan: ${e.message}")
+        }
+    }
+}
+}

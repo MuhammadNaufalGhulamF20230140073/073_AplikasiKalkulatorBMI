@@ -119,7 +119,7 @@ fun PetaNavigasi() {
 
             HalamanOutfit(
                 kategoriId = kategoriId,
-                onBack = { navController.popBackStack() },
+                onBack = { navController.popBackStack(DestinasiEntry.route, inclusive = false) },
                 onSelesai = {
                     navController.currentBackStackEntry?.savedStateHandle?.set("userId", userId)
                     navController.navigate(DestinasiUtama.route) {

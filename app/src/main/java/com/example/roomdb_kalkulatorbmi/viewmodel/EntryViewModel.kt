@@ -45,3 +45,34 @@ fun updateBerat(value: String) {
     _berat.value = value
     _errorPesan.value = null // Reset error saat user mulai memperbaiki input
 }
+
+///////////////////////////////////////////////////////////////////////////
+// 4. LOGIKA VALIDASI (Pengecekan Keamanan Data)
+///////////////////////////////////////////////////////////////////////////
+
+/**
+ * Fungsi Validasi: Mengecek apakah input masuk akal untuk manusia
+ * Menggunakan logika mandiri di dalam ViewModel (Tanpa memanggil DAO/Repo)
+ */
+fun isDataLogis(): Boolean {
+    val t = _tinggi.value.toFloatOrNull() ?: 0f
+    val b = _berat.value.toFloatOrNull() ?: 0f
+
+    return when {
+        // Logika validasi: Tinggi badan normal (50cm - 250cm)
+        t < 50f || t > 250f -> {
+            _errorPesan.value = "Tinggi badan harus antara 50 - 250 cm"
+            false
+        }
+        // Logika validasi: Berat badan normal (2kg - 500kg)
+        b < 2f || b > 500f -> {
+            _errorPesan.value = "Berat badan harus antara 2 - 500 kg"
+            false
+        }
+        else -> {
+            _errorPesan.value = null
+            true
+        }
+    }
+}
+

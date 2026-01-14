@@ -36,3 +36,25 @@ class HomeViewModel(
             initialValue = emptyList() // Data awal kosong sebelum database merespon
         )
 }
+
+///////////////////////////////////////////////////////////////////////////
+// 3. FUNGSI TAMBAH USER (Input ke Database)
+///////////////////////////////////////////////////////////////////////////
+fun tambahUser(namaBaru: String) {
+    /////// PENYIAPAN TANGGAL
+    // Format ini digunakan untuk mengisi kolom 'tanggalDibuat' dan 'tanggalDiubah'
+    val sdf = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault())
+    val waktuSekarang = sdf.format(Date())
+
+    /////// EKSEKUSI INSERT
+    viewModelScope.launch {
+        // Memanggil fungsi 'insertUser' di UserDao melalui RepositoryUser
+        repository.insertUser(
+            UserEntity(
+                nama = namaBaru,
+                tanggalDibuat = waktuSekarang,
+                tanggalDiubah = waktuSekarang // Defaultnya sama dengan tanggal dibuat
+            )
+        )
+    }
+}

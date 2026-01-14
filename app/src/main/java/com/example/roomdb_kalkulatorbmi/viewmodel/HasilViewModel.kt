@@ -40,3 +40,23 @@ class HasilViewModel(
 
     private val _kategoriId = MutableStateFlow(0)
     val kategoriId: StateFlow<Int> = _kategoriId}
+
+
+///////////////////////////////////////////////////////////////////////////
+// 3. FUNGSI LOGIKA TAMPILAN (DARI DAO -> REPO -> VIEWMODEL)
+///////////////////////////////////////////////////////////////////////////
+fun updateDisplayHanya(bmi: Float) {
+    viewModelScope.launch {
+        try {
+            // [getKategoriByNilaiBmi] -> Memanggil BmiDao melalui RepositoryBMI
+            // Hasilnya berupa objek 'KategoriBmiEntity' dari database
+            val kategoriEntity = repositoryBmi.getKategoriByNilaiBmi(bmi)
+
+            _nilaiBmi.value = bmi
+            _kategori.value = kategoriEntity?.namaKategori ?: "Normal"
+            _kategoriId.value = kategoriEntity?.kategoriId ?: 2
+        } catch (e: Exception) {
+            Log.e("DEBUG_BMI", "Gagal update display: ${e.message}")
+        }
+    }
+}

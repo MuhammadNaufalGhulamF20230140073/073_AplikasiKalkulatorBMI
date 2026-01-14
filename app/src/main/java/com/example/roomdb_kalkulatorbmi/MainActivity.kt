@@ -3,45 +3,39 @@ package com.example.roomdb_kalkulatorbmi
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.roomdb_kalkulatorbmi.ui.theme.Roomdb_kalkulatorbmiTheme
+import com.example.roomdb_kalkulatorbmi.view.uicontroller.PetaNavigasi
 
+///////////////////////////////////////////////////////////////////////////
+// 1. DEFINISI KELAS UTAMA (PINTU MASUK TAMPILAN)
+///////////////////////////////////////////////////////////////////////////
+/**
+ * MainActivity adalah aktivitas tunggal (Single Activity) yang menjadi wadah
+ * bagi seluruh tampilan Compose (Screen) di aplikasi ini.
+ */
 class MainActivity : ComponentActivity() {
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 2. SIKLUS HIDUP (ONCREATE)
+    ///////////////////////////////////////////////////////////////////////////
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        /////// MENGAKTIFKAN UI COMPOSE
+        // setContent bertugas mengubah kode Kotlin menjadi tampilan visual di layar HP.
         setContent {
+
+            /////// A. THEME (GAYA VISUAL)
+            // Membungkus aplikasi dengan tema warna, tipografi, dan bentuk
+            // yang didefinisikan di folder 'ui.theme'.
             Roomdb_kalkulatorbmiTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+
+                /////// B. NAVIGASI (PENGATUR HALAMAN)
+                // Memanggil 'PetaNavigasi' yang mengatur perpindahan antar layar.
+                // DIDAPAT DARI: File navigasi yang menggunakan 'NavHost'.
+                PetaNavigasi()
+
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Roomdb_kalkulatorbmiTheme {
-        Greeting("Android")
     }
 }

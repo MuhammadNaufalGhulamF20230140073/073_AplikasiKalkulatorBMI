@@ -170,3 +170,132 @@ fun HalamanHome(
                     style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
                 )
             }
+
+
+            ///////////////////////////////////////////////////////////////////////////
+            // 3. LIST USER SECTION (Daftar Profil dari Database)
+            ///////////////////////////////////////////////////////////////////////////
+
+            /////// KONDISI: JIKA DATA KOSONG
+            if (daftarUser.isEmpty()) {
+                item {
+                    Column(
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 40.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(Icons.Default.AccountCircle, null, Modifier.size(64.dp), Color.LightGray)
+                        Text(stringResource(R.string.pesan_kosong), color = Color.Gray)
+                    }
+                }
+            }
+
+            /////// KONDISI: MENAMPILKAN ITEM USER
+            items(daftarUser) { user ->
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Avatar Bulat (Huruf Inisial Nama)
+                        Surface(
+                            modifier = Modifier.size(54.dp),
+                            shape = CircleShape,
+                            color = Color(0xFF6200EE).copy(alpha = 0.1f)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Text(
+                                    text = user.nama.take(1).uppercase(),
+                                    color = Color(0xFF6200EE),
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 22.sp
+                                )
+                            }
+                        }
+
+                        Spacer(Modifier.width(16.dp))
+
+                        /////// INFO KOLOM (Nama & Metadata Tanggal)
+                        // Data ini didapat dari UserEntity di Room
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = user.nama,
+                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                            )
+
+                            Spacer(modifier = Modifier.height(4.dp))
+
+                            // Menampilkan Tanggal Dibuat (Data dari DB)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Default.CalendarToday, null, Modifier.size(10.dp), Color.Gray)
+                                Spacer(Modifier.width(4.dp))
+                                Text(
+                                    text = "Joined: ${user.tanggalDibuat}",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = Color.Gray.copy(alpha = 0.7f),
+                                    fontSize = 10.sp
+                                )
+                            }
+
+                            // Menampilkan Tanggal Diubah (Update otomatis saat hitung BMI)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Default.Update, null, Modifier.size(10.dp), Color(0xFF4CAF50))
+                                Spacer(Modifier.width(4.dp))
+                                Text(
+                                    text = "Active: ${user.tanggalDiubah}",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = Color(0xFF4CAF50),
+                                    fontSize = 10.sp
+                                )
+                            }
+                        }
+
+                        /////// ACTION BUTTONS (Lanjut & Hapus)
+                        Row {
+                            // Tombol Play: Lanjut ke kalkulator BMI untuk user ini
+                            FilledIconButton(
+                                onClick = { onLanjut(user) },
+                                colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color(0xFF6200EE)),
+                                modifier = Modifier.size(38.dp)
+                            ) {
+                                Icon(Icons.Default.PlayArrow, null, tint = Color.White, modifier = Modifier.size(20.dp))
+                            }
+
+                            Spacer(Modifier.width(8.dp))
+
+                            // Tombol Sampah: Menghapus user melalui HomeViewModel -> Repository
+                            IconButton(
+                                onClick = { viewModel.hapusUser(user) },
+                                modifier = Modifier.size(38.dp)
+                            ) {
+                                Icon(Icons.Default.Delete, null, tint = Color.Red.copy(alpha = 0.6f), modifier = Modifier.size(20.dp))
+                            }
+                        }
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////////////////
+            // 4. FOOTER SECTION (Display Gambar Animasi/GIF)
+            ///////////////////////////////////////////////////////////////////////////
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+                AsyncImage(
+                    model = R.drawable.halamahome, // DIDAPAT DARI: res/drawable
+                    contentDescription = null,
+                    imageLoader = pemutarGambar,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .clip(RoundedCornerShape(24.dp)),
+                    contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                )
+            }
+        }
+    }
+}
+}

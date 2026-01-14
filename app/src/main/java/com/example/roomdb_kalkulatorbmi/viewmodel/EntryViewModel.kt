@@ -30,3 +30,18 @@ class EntryViewModel(
     private val _errorPesan = MutableStateFlow<String?>(null)
     val errorPesan: StateFlow<String?> = _errorPesan.asStateFlow()
 }
+
+
+///////////////////////////////////////////////////////////////////////////
+// 3. FUNGSI UPDATE (Sinkronisasi UI ke State)
+///////////////////////////////////////////////////////////////////////////
+
+fun updateTinggi(value: String) {
+    _tinggi.value = value
+    _errorPesan.value = null // Reset error saat user mulai memperbaiki input
+}
+
+fun updateBerat(value: String) {
+    _berat.value = value
+    _errorPesan.value = null // Reset error saat user mulai memperbaiki input
+}
